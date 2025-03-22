@@ -5,22 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Instant Weather App</title>
     <link rel="stylesheet" href="style.css" />
+    <script src="config.js" defer></script>
+    <script src="app.js" defer></script>
   </head>
   <body>
-    <h1>Instant Weather Forecast</h1>
+    <h1>Instant Weather</h1>
+    <div id="result" style="display: none">
+      <div class="weather">
+        <div class="top">
+          <div class="about">
+            <div class="location">
+              <span id="city" class="city"></span> &#9679;
+              <span id="country_name" class="country_name"></span> &#9679;
+              <p class="country_id">
+                <span id="country_code" class="country_code"></span>
+                <span id="country_flag" class="country_flag"></span>
+              </p>
+            </div>
+            <p id="description" class="weather-description"></p>
+          </div>
 
-    <label for="country">Select a country:</label>
-    <select id="country">
-      <option value="9.08,7.40">Nigeria</option>
-      <option value="51.51,-0.13">United Kingdom</option>
-      <option value="40.71,-74.01">USA (New York)</option>
-      <option value="35.68,139.76">Japan</option>
-      <option value="-33.87,151.21">Australia</option>
-    </select>
-
-    <button id="getWeather">Get Current Weather</button>
-    <div id="weatherResult"></div>
-
-    <script src="app.js"></script>
+          <img id="weatherIcon" alt="weather" class="weather-icon" src="" />
+        </div>
+        <div class="bottom">
+          <p id="temperature" class="temperature"></p>
+          <table class="details">
+            <thead>
+              <tr>
+                <th colspan="2">Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Feels like</td>
+                <td id="feelsLike" class="parameter-value"></td>
+              </tr>
+              <tr>
+                <td>Wind</td>
+                <td id="wind" class="parameter-value"></td>
+              </tr>
+              <tr>
+                <td>Humidity</td>
+                <td id="humidity" class="parameter-value"></td>
+              </tr>
+              <tr>
+                <td>Pressure</td>
+                <td id="pressure" class="parameter-value"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <form id="weatherForm">
+      <input id="searchbar" type="search" placeholder="Search City" />
+      <button id="getWeather" type="submit">Get Weather</button>
+    </form>
   </body>
 </html>

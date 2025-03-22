@@ -22,3 +22,5 @@ Thumbs.db
 # IDE or editor settings
 .vscode/
 .idea/
+
+config.js
