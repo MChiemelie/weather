@@ -1,14 +1,10 @@
-const OPENWEATHERMAPAPI = CONFIG.OPENWEATHERMAPAPI;
 
-// Function to fetch the full country details from REST Countries API
 async function getCountryDetails(alpha2Code) {
   try {
     const response = await fetch(
       `https://restcountries.com/v3.1/alpha/${alpha2Code}`
     );
-    if (!response.ok) {
-      throw new Error("Error fetching country details");
-    }
+    if (!response.ok) throw new Error("Error fetching country details");
     const data = await response.json();
     return {
       name: data[0]?.name?.common || "Unknown Country",
@@ -20,17 +16,16 @@ async function getCountryDetails(alpha2Code) {
   }
 }
 
-// Main function to get weather data
 async function getWeather(event) {
   if (event) event.preventDefault();
 
-  const cityInput = document.getElementById("searchbar").value;
+  const cityInput = document.getElementById("searchbar").value.trim();
   if (!cityInput) {
     console.warn("No city entered");
     return;
   }
 
-  const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityInput}&APPID=${OPENWEATHERMAPAPI}&units=metric`;
+  const url = `/api/weather?city=${encodeURIComponent(cityInput)}`;
 
   try {
     console.log("Fetching weather for:", cityInput);
@@ -42,11 +37,9 @@ async function getWeather(event) {
     }
     const data = await response.json();
 
-    // Get country details
     const countryCode = data.sys.country.toUpperCase();
     const countryDetails = await getCountryDetails(countryCode);
 
-    // Weather data object to store
     const weatherData = {
       city: data.name,
       description: data.weather[0].description,
@@ -61,17 +54,14 @@ async function getWeather(event) {
       countryFlag: countryDetails.flag,
     };
 
-    // Save to localStorage
     localStorage.setItem("weatherData", JSON.stringify(weatherData));
 
-    // Display the weather data
     displayWeather(weatherData);
   } catch (error) {
     console.error("Error fetching weather:", error);
   }
 }
 
-// Function to display weather data
 function displayWeather(data) {
   document.getElementById("city").innerText = data.city;
   document.getElementById("description").innerText = data.description;
@@ -87,11 +77,9 @@ function displayWeather(data) {
     "country_flag"
   ).innerHTML = `<img src="${data.countryFlag}" alt="${data.countryName} flag" class="flag">`;
 
-  // Show the result container
   document.getElementById("result").style.display = "block";
 }
 
-// Function to load saved weather data on page load
 function loadSavedWeather() {
   const savedData = localStorage.getItem("weatherData");
   if (savedData) {
@@ -99,8 +87,7 @@ function loadSavedWeather() {
   }
 }
 
-// Ensure DOM is fully loaded before attaching events
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("weatherForm").addEventListener("submit", getWeather);
-  loadSavedWeather(); // Restore state on page load
+  loadSavedWeather();
 });
