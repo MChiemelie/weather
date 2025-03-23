@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 // Function to fetch full country details from REST Countries API
-=======
-
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
 async function getCountryDetails(alpha2Code) {
   try {
     const response = await fetch(
@@ -20,10 +16,7 @@ async function getCountryDetails(alpha2Code) {
   }
 }
 
-<<<<<<< HEAD
 // Main function to get weather data from our serverless endpoint
-=======
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
 async function getWeather(event) {
   if (event) event.preventDefault();
 
@@ -33,10 +26,7 @@ async function getWeather(event) {
     return;
   }
 
-<<<<<<< HEAD
   // Calling our serverless function instead of OpenWeatherMap directly
-=======
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
   const url = `/api/weather?city=${encodeURIComponent(cityInput)}`;
 
   try {
@@ -49,17 +39,11 @@ async function getWeather(event) {
     }
     const data = await response.json();
 
-<<<<<<< HEAD
     // Get country details from REST Countries API
     const countryCode = data.sys.country.toUpperCase();
     const countryDetails = await getCountryDetails(countryCode);
 
     // Construct weather data object
-=======
-    const countryCode = data.sys.country.toUpperCase();
-    const countryDetails = await getCountryDetails(countryCode);
-
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
     const weatherData = {
       city: data.name,
       description: data.weather[0].description,
@@ -74,15 +58,10 @@ async function getWeather(event) {
       countryFlag: countryDetails.flag,
     };
 
-<<<<<<< HEAD
     // Save state to localStorage for persistence
     localStorage.setItem("weatherData", JSON.stringify(weatherData));
 
     // Display weather data
-=======
-    localStorage.setItem("weatherData", JSON.stringify(weatherData));
-
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
     displayWeather(weatherData);
   } catch (error) {
     console.error("Error fetching weather:", error);
@@ -90,10 +69,7 @@ async function getWeather(event) {
   }
 }
 
-<<<<<<< HEAD
 // Function to display weather data on the page
-=======
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
 function displayWeather(data) {
   document.getElementById("city").innerText = data.city;
   document.getElementById("description").innerText = data.description;
@@ -109,13 +85,11 @@ function displayWeather(data) {
     "country_flag"
   ).innerHTML = `<img src="${data.countryFlag}" alt="${data.countryName} flag" class="flag">`;
 
+  // Show the result container
   document.getElementById("result").style.display = "block";
 }
 
-<<<<<<< HEAD
 // Function to load saved weather data from localStorage on page load
-=======
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
 function loadSavedWeather() {
   const savedData = localStorage.getItem("weatherData");
   if (savedData) {
@@ -123,14 +97,11 @@ function loadSavedWeather() {
   }
 }
 
+// Ensure DOM is fully loaded before attaching events
 document.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
   const weatherForm = document.getElementById("weatherForm");
   if (weatherForm) {
     weatherForm.addEventListener("submit", getWeather);
   }
-=======
-  document.getElementById("weatherForm").addEventListener("submit", getWeather);
->>>>>>> 36c0141240f7b7fc7bbc8359504eb858f62d72ec
   loadSavedWeather();
 });
