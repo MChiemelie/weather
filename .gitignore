@@ -24,3 +24,4 @@ Thumbs.db
 .idea/
 
 config.js
+.vercel
